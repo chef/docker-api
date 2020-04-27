@@ -1,7 +1,4 @@
 # This class represents a Docker Image.
-
-require "cgi"
-
 class Docker::Image
   include Docker::Base
 
@@ -177,7 +174,7 @@ class Docker::Image
       # By using compare_by_identity we can create a Hash that has
       # the same key multiple times.
       query = {}.tap(&:compare_by_identity)
-      Array(names).each { |name| query['names'.dup] = URI.encode(name) }
+      Array(names).each { |name| query['names'.dup] = CGI.escape(name) }
       conn.get(
         '/images/get',
         query,
