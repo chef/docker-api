@@ -1,13 +1,12 @@
-docker-api
-==========
+# docker-api
+
 [![Gem Version](https://badge.fury.io/rb/docker-api.svg)](https://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.svg?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.svg)](https://codeclimate.com/github/swipely/docker-api)
 
 This gem provides an object-oriented interface to the [Docker Engine API](https://docs.docker.com/develop/sdk/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 1.4.*
 
 If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
-Installation
-------------
+## Installation
 
 Add this line to your application's Gemfile:
 
@@ -18,28 +17,27 @@ gem 'docker-api'
 And then run:
 
 ```shell
-$ bundle install
+bundle install
 ```
 
 Alternatively, if you wish to just use the gem in a script, you can run:
 
 ```shell
-$ gem install docker-api
+gem install docker-api
 ```
 
 Finally, just add `require 'docker'` to the top of the file using this gem.
 
-Usage
------
+## Usage
 
 docker-api is designed to be very lightweight. Almost no state is cached (aside from id's which are immutable) to ensure that each method call's information is up to date. As such, just about every external method represents an API call.
 
-## Starting up
+### Starting up
 
 Follow the [installation instructions](https://docs.docker.com/install/), and then run:
 
 ```shell
-$ sudo docker -d
+sudo docker -d
 ```
 
 This will daemonize Docker so that it can be used for the remote API calls.
@@ -85,7 +83,7 @@ The cert path is a folder that contains the cert, key and cacert files.
 docker-api is expecting the files to be named: cert.pem, key.pem, and ca.pem.
 If your files are named different, you'll want to set your options explicity:
 
-```
+```ruby
 Docker.options = {
     client_cert: File.join(cert_path, 'cert.pem'),
     client_key: File.join(cert_path, 'key.pem'),
@@ -96,7 +94,7 @@ Docker.options = {
 
 If you want to load the cert files from a variable, e.g. you want to load them from ENV as needed on Heroku:
 
-```
+```ruby
 cert_store = OpenSSL::X509::Store.new
 certificate = OpenSSL::X509::Certificate.new ENV["DOCKER_CA"]
 cert_store.add_cert certificate
@@ -138,7 +136,7 @@ Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 
 
 ## Images
 
-Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#2-2-images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, `build_from_tar`, or `.import` to make an instance.
+Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#2-2-images) section of the API. If an API call accepts query parameters, these can be passed as a Hash to its corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, `build_from_tar`, or `.import` to make an instance.
 
 ```ruby
 require 'docker'
@@ -604,7 +602,6 @@ Docker::Container.all({}, Docker::Connection.new('tcp://example.com:2375', {}))
 
 To create images through `rake`, a DSL task is provided. For example:
 
-
 ```ruby
 require 'rake'
 require 'docker'
@@ -624,10 +621,9 @@ end
 
 ## Not supported (yet)
 
-*   Generating a tarball of images and metadata for a repository specified by a name: https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#get-a-tarball-containing-all-images-and-tags-in-a-repository
-*   Load a tarball generated from docker that contains all the images and metadata of a repository: https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#load-a-tarball-with-a-set-of-images-and-tags-into-docker
+* Generating a tarball of images and metadata for a repository specified by a name: https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#get-a-tarball-containing-all-images-and-tags-in-a-repository
+* Load a tarball generated from docker that contains all the images and metadata of a repository: https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#load-a-tarball-with-a-set-of-images-and-tags-into-docker
 
-License
------
+## License
 
 This program is licensed under the MIT license. See LICENSE for details.
