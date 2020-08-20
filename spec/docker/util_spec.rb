@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'tempfile'
+require 'tempfile' unless defined?(Tempfile)
 
 SingleCov.covered! uncovered: 71
 

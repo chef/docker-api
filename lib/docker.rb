@@ -1,12 +1,12 @@
-require 'cgi'
-require 'multi_json'
-require 'excon'
-require 'tempfile'
-require 'base64'
-require 'find'
-require 'rubygems/package'
-require 'uri'
-require 'open-uri'
+require 'cgi' unless defined?(CGI)
+require 'multi_json' unless defined?(MultiJson)
+require 'excon' unless defined?(Excon)
+require 'tempfile' unless defined?(Tempfile)
+require 'base64' unless defined?(Base64)
+require 'find' unless defined?(Find.find)
+require 'rubygems/package' unless defined?(Gem::Package)
+require 'uri' unless defined?(URI)
+require 'open-uri' unless defined?(OpenURI)
 
 # Add the Hijack middleware at the top of the middleware stack so it can
 # potentially hijack HTTP sockets (when attaching to stdin) before other
